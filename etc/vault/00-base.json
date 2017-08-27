@@ -1,0 +1,8 @@
+{
+  "cluster_name": "intermediate-ca",
+  "cache_size": "32000",
+  "disable_cache": false,
+  "disable_mlock": true,
+  "default_lease_ttl": "768h",
+  "max_lease_ttl": "768h"
+}

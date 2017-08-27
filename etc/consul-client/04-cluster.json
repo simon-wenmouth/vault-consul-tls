@@ -1,0 +1,5 @@
+{
+  "retry_join": [
+    "consul-server"
+  ]
+}

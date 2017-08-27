@@ -1,0 +1,75 @@
+version: "2.2"
+services:
+  # vault (root certificate authority)
+  ca:
+    image: simon-wenmouth/vault:0.8.1
+    hostname: ca
+    domainname: dc.consul
+    networks:
+      dc_consul:
+        ipv4_address: 172.19.0.10
+        aliases:
+          - ca
+          - ca.dc.consul
+    volumes:
+      - ./etc/ca:/opt/vault/config
+    entrypoint:
+      - bash
+      - /opt/vault/bin/ca-entrypoint.sh
+    command: vault server -config="/opt/vault/config" -log-level=trace
+  # consul agent (server)
+  consul-server:
+    image: simon-wenmouth/consul:0.9.2
+    init: true
+    hostname: consul-server
+    domainname: dc.consul
+    networks:
+      dc_consul:
+        ipv4_address: 172.19.0.11
+        aliases:
+          - consul-server
+          - consul-server.dc.consul
+    volumes:
+      - ./etc/consul-server:/opt/consul/config
+    env_file: .env-consul-server
+    entrypoint:
+      - bash
+      - /opt/consul/bin/consul-entrypoint.sh
+    command: consul agent -data-dir=/opt/consul/data -config-dir=/opt/consul/config
+  # consul agent (client)
+  consul-client:
+    image: simon-wenmouth/consul:0.9.2
+    init: true
+    hostname: consul-client
+    domainname: dc.consul
+    networks:
+      dc_consul:
+        ipv4_address: 172.19.0.12
+        aliases:
+          - consul-client
+          - consul-client.dc.consul
+    volumes:
+      - ./etc/consul-client:/opt/consul/config
+    env_file: .env-consul-client
+    entrypoint:
+      - bash
+      - /opt/consul/bin/consul-entrypoint.sh
+    command: consul agent -data-dir=/opt/consul/data -config-dir=/opt/consul/config
+  # vault (intermediate certificate authority)
+  vault:
+    image: simon-wenmouth/vault:0.8.1
+    network_mode: "service:consul-client"
+    volumes:
+      - ./etc/vault:/opt/vault/config
+    env_file: .env-vault
+    entrypoint:
+      - bash
+      - /opt/vault/bin/intermediate-entrypoint.sh
+    command: vault server -config="/opt/vault/config" -log-level=trace
+networks:
+  dc_consul:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.19.0.0/16
+         gateway: 172.19.0.1

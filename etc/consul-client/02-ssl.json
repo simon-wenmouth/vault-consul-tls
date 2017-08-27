@@ -1,0 +1,7 @@
+{
+  "verify_incoming": true,
+  "verify_outgoing": true,
+  "ca_file": "/opt/consul/config/keys/agent.ca.pem",
+  "cert_file": "/opt/consul/config/keys/agent.cert.pem",
+  "key_file": "/opt/consul/config/keys/agent.key.pem"
+}

@@ -1,0 +1,15 @@
+.idea
+.env*
+
+etc/ca/keys/
+!etc/ca/keys/.gitkeep
+!etc/ca/keys/bootstrap/.gitkeep
+
+etc/consul-server/keys
+!etc/consul-server/keys/.gitkeep
+
+etc/consul-client/keys
+!etc/consul-client/keys/.gitkeep
+
+etc/vault/keys
+!etc/vault/keys/.gitkeep

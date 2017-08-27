@@ -1,0 +1,21 @@
+{
+  "storage": {
+    "consul": {
+      "address": "consul-client.dc.consul:8500",
+      "check_timeout": "5s",
+      "consistency_mode": "default",
+      "disable_registration": "false",
+      "max_parallel": "128",
+      "path": "vault/",
+      "scheme": "https",
+      "service": "vault",
+      "service_tags": "",
+      "token": "",
+      "cluster_addr": "https://172.19.0.12:8201",
+      "redirect_addr": "https://172.19.0.12:8200",
+      "tls_ca_file": "/opt/vault/config/keys/server.ca.pem",
+      "tls_cert_file": "/opt/vault/config/keys/server.cert.pem",
+      "tls_key_file ": "/opt/vault/config/keys/server.key.pem"
+    }
+  }
+}
