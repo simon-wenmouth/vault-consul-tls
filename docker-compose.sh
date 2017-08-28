@@ -107,7 +107,7 @@ command=$1
 
 shift
 
-rm .env-consul-client .env-consul-server .env-vault
+rm -f .env-consul-client .env-consul-server .env-vault
 
 touch .env-consul-client .env-consul-server .env-vault
 
